@@ -1,0 +1,128 @@
+\documentclass[11pt]{article}
+% \documentclass[preview,border=24pt]{standalone}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage{array}
+\usepackage{fixltx2e}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\graphicspath{ {./} }
+
+\title{\textbf{Многогранник Силаши}}
+\date{}
+\begin{document}
+
+\maketitle
+
+\textbf{Теорема}. Кроме тетраэдра и многогранника Силаши не существует такого многогранника, что каждая из его граней имеет общее ребро с каждой другой гранью.\\
+
+\emph{Доказательство}. Сначала нужно определить какой вид могут иметь такой многогранник. Выпишем формулу Эйлера для многогранников:
+\begin{equation}
+  \textnormal{В} - \textnormal{Р} + \textnormal{Г} = 2 - 2g,
+  \label{eq:euler}
+\end{equation}
+где В - количество вершин, Р - количество ребер, Г - количество граней, g - род поверхности.\\
+
+У многогранника будет Г граней, которые будут являтся Г-1 многоугольники (из формулы имеем Г граней, при этом из-за условия, что каждая грань должна иметь общее ребро с другими гранями следует, что они будут Г-1 многоугольниками). При этом будет сходиться ровно три грани в каждой вершине. Так как если будут сходится больше, чем 3, то возникнет ситуация, когда будут две грани не имеющие общего ребра. Если по 2, то будут возникать двуугольники.
+Из этого следует, что количество вершин равняется
+\begin{equation}
+  \textnormal{В} = \frac{\textnormal{Г}(\textnormal{Г}-1)}{3}
+\end{equation}
+Исходя из того, что все многоугольники попарно имеют общее ребро, то количество ребер будет равно
+\begin{equation}
+  \textnormal{Р} = \frac{\textnormal{Г}(\textnormal{Г}-1)}{2}
+\end{equation}
+Подставим в исходную формулу (\ref{eq:euler}), полученные выражения для вершин и рёбер:
+\begin{equation}
+  \frac{\textnormal{Г}(\textnormal{Г}-1)}{3} + \frac{\textnormal{Г}(\textnormal{Г}-1)}{2} + \textnormal{Г} = 2 - 2g
+\end{equation}
+После упрощения получаем:
+\begin{equation}
+  \textnormal{Г}(\textnormal{Г} - 7) = 12(g - 1)
+\end{equation}
+Выразим через $g$:
+\begin{equation}
+  g = 1 + \frac{\textnormal{Г}(\textnormal{Г} - 7)}{12}
+\end{equation}
+
+Так как $g$ должно быть целым, то $\textnormal{Г} \equiv 0, 3, 4, 7 \pmod{12}$.
+При $\textnormal{Г} = 3$ многогранник не реализуем, при $\textnormal{Г} = 4$ - тетраэдр, при $\textnormal{Г} = 7$ - многогранник Силаши. Следующее подходящее $\textnormal{Г} = 12$. Это должен быть многогранник с 44-я вершинами, 66-ю ребрами, 12-ю 11-угольными гранями и 6-ю дырами.
+
+Искомый тип многогранников задается графом, который называется кубический \emph{граф-клетка}\footnote{http://mathworld.wolfram.com/CageGraph.html}. Это регулярный граф с параметрами $(v, g)$ при этом с минимальным количеством вершин, где $v$ - количество ребер графа сходящихся в одной вершине, а $g$ - обхват графа.\\\\
+Необходимые определения:
+
+\emph{Регулярный граф} − это граф степени вершин которого равны (в каждую вершину имеет одинаковое количество соседних вершин).
+
+\emph{Кубический граф} − граф в каждой вершине которого сходится ровно три ребра, в нашем случае графы будут $(3, g)-\textnormal{клетки}$.
+
+\emph{Обхват графа} − длина наименьшего цикла в графе (в данном случае количество ребер многоугольника, т.е. $\textnormal{Г}-1$).
+\\
+
+Например, при $\textnormal{Г} = 4$ графом будет \emph{$(3, 3)-\textnormal{клетка}$}; при $\textnormal{Г} = 7$ будет \emph{$(3, 6)-\textnormal{клетка}$}\footnote{http://mathworld.wolfram.com/HeawoodGraph.html}. Следующему многограннику соответствует граф $(3, 11)$ с 44-я вершинами. Но минимальное количество вершин для графа \emph{$(3, 11)$}\footnote{http://mathworld.wolfram.com/Balaban11-Cage.html} равняется 112, и это единственный граф с параметрами $(3, 11)$. Откуда следует, что искомого многоранника при Г = 12 не существует.\\
+
+Кроме того известно сколько вершин должно быть у многогранника при определенном $\textnormal{Г}$ и нижнюю оценку на количество вершин в $(3, g)$ графах
+\footnote{http://oeis.org/A027383}
+\footnote{https://en.wikipedia.org/wiki/Cage\_(graph\_theory)}.
+
+Требуемое количество вершин у искомого многогранника:
+\begin{equation}
+  \textnormal{В} = \frac{\textnormal{Г}(\textnormal{Г}-1)}{3}
+\end{equation}
+
+Нижняя оценка вершин в графе $(v, g)$
+
+\begin{equation}
+  \textnormal{В}_{lower} =
+  \begin{cases}
+    1 + v\sum_{i = 0}^{\frac{g-3}{2}} (v - 1) ^ i, & \text{при нечетном g}\\
+    2\sum_{i = 0}^{\frac{g-2}{2}} (v - 1) ^ i, & \text{при четном g}\\
+  \end{cases}
+\end{equation}
+
+Соответственно для графа $(3, \textnormal{Г}-1)$ нижняя оценка равна
+\begin{equation}
+  \textnormal{В}_{lower} =
+  \begin{cases}
+    1 + 3\sum_{i = 0}^{\frac{\text{Г-4}}{2}} 2 ^ i, & \text{при нечетном Г-1}\\
+    2\sum_{i = 0}^{\frac{\text{Г-3}}{2}} 2 ^ i, & \text{при четном Г-1}\\
+  \end{cases}
+\end{equation}
+
+Нижняя оценка растет быстрее, чем требуемое количество вершин в многограннике, вследствие чего для $\textnormal{Г} > 7$ не сущестует графа $(3, $ \textnormal{Г}-1$)$ с необходимым количеством вершин.
+
+\begin{center}
+  \begin{tabular}{| c | c | c |}
+    \hline
+    \textnormal{Г} & \textnormal{B} & $\textnormal{В}_{lower}$ \\ [0.5ex]
+    \hline\hline
+    4 & 4 & 4 \\
+    \hline
+    7 & 14 & 14 \\
+    \arrayrulecolor{red}\hline
+    12 & 44 & 94 \\
+    \arrayrulecolor{black}\hline
+    15 & 70 & 254 \\
+    \hline
+    16 & 80 & 382 \\
+    \hline
+    19 & 114 & 1022 \\
+    \hline
+    24 & 184 & 6142 \\
+    \hline
+    27 & 234 & 16382 \\
+    \hline
+    28 & 252 & 24574 \\
+    \hline
+    ... & ... & ... \\
+    \hline
+  \end{tabular}
+\end{center}
+
+Из чего можно сделать вывод, что подобных многогранников при Г > 7 не существует. □
+
+\end{document}
